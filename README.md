@@ -2,6 +2,13 @@
 
 ![Sentry Old Jira Server Integration](assets/logo.png)
 
+
+<p align="center">
+  <a href="https://github.com/ohappykust/sentry-old-jira-server">Original repository</a>
+|
+<a href="https://pypi.org/project/sentry-old-jira-server">Original releases</a>
+</p>
+
 ## Overview
 
 The **Sentry Old Jira Server Integration** is a fork of the official Jira integration, designed to allow you to use this powerful integration from Sentry team with old Jira versions by allowing setup integration with username and password.
