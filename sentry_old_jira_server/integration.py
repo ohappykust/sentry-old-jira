@@ -86,23 +86,13 @@ FEATURE_DESCRIPTIONS = [
     ),
 ]
 
-setup_alert = {
-    "type": "warning",
-    "icon": "icon-warning-sm",
-    "text": "Your Jira instance must be able to communicate with Sentry."
-            " Sentry makes outbound requests from a [static set of IP"
-            " addresses](https://docs.sentry.io/ip-ranges/) that you may wish"
-            " to allow in your firewall to support this integration.",
-}
-
 metadata = IntegrationMetadata(
     description=_(DESCRIPTION.strip()),
     features=FEATURE_DESCRIPTIONS,
     author="Kirill Nikolaevskiy",
     noun=_("Installation"),
     issue_url="https://github.com/ohappykust/sentry-old-jira-server/issues/new?assignees=&labels=Component:%20Integrations&template=bug.yml&title=Jira%20Server%20Integration%20Problem",
-    source_url="https://github.com/ohappykust/sentry-old-jira-server",
-    aspects={"alerts": [setup_alert]},
+    source_url="https://github.com/ohappykust/sentry-old-jira-server"
 )
 
 
@@ -115,9 +105,7 @@ class InstallationForm(forms.Form):
     )
     verify_ssl = forms.BooleanField(
         label=_("Verify SSL"),
-        help_text=_(
-            "By default, we verify SSL certificates " "when making requests to your Jira instance."
-        ),
+        help_text=_("By default, we verify SSL certificates when making requests to your Jira instance."),
         widget=forms.CheckboxInput(),
         required=False,
         initial=True,
