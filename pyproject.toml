@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sentry-old-jira-server"
-version = "1.0.0"
+version = "1.0.1"
 description = ""
 authors = ["Kirill Nikolaevskiy <me@happykust.dev>"]
 readme = "README.md"
