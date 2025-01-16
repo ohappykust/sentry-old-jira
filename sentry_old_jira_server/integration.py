@@ -86,13 +86,23 @@ FEATURE_DESCRIPTIONS = [
     ),
 ]
 
+setup_alert = {
+    "type": "warning",
+    "icon": "icon-warning-sm",
+    "text": "Your Jira instance must be able to communicate with Sentry."
+    " Sentry makes outbound requests from a [static set of IP"
+    " addresses](https://docs.sentry.io/ip-ranges/) that you may wish"
+    " to allow in your firewall to support this integration.",
+}
+
 metadata = IntegrationMetadata(
     description=_(DESCRIPTION.strip()),
     features=FEATURE_DESCRIPTIONS,
     author="Kirill Nikolaevskiy",
     noun=_("Installation"),
     issue_url="https://github.com/ohappykust/sentry-old-jira-server/issues/new?assignees=&labels=Component:%20Integrations&template=bug.yml&title=Jira%20Server%20Integration%20Problem",
-    source_url="https://github.com/ohappykust/sentry-old-jira-server"
+    source_url="https://github.com/ohappykust/sentry-old-jira-server",
+    aspects={"alerts": [setup_alert]},
 )
 
 
@@ -359,9 +369,9 @@ class OldJiraServerIntegration(IssueSyncIntegration):
                 "on_resolve": pm.resolved_status,
             }
         config["sync_status_forward"] = sync_status_forward
-        config[self.issues_ignored_fields_key] = ", ".join(
-            config.get(self.issues_ignored_fields_key, "")
-        )
+        # config[self.issues_ignored_fields_key] = ", ".join(
+        #     config.get(self.issues_ignored_fields_key, "")
+        # )
         return config
 
     def sync_metadata(self):
@@ -636,6 +646,9 @@ class OldJiraServerIntegration(IssueSyncIntegration):
 
         project_id = params.get("project", defaults.get("project"))
         jira_projects = self.get_projects()
+
+        if not project_id:
+            project_id = self.get_config_data().get("sync_status_forward", {None: None}).popitem()[0]
 
         if not project_id:
             project_id = jira_projects[0]["id"]
@@ -1087,7 +1100,7 @@ class OldJiraServerIntegrationProvider(IntegrationProvider):
         }
         # Create the webhook before the integration record exists
         # so that if it fails we don't persist a broken integration.
-        self.create_webhook(external_id, webhook_secret, install)
+        # self.create_webhook(external_id, webhook_secret, install)
 
         return {
             "name": install["username"],
